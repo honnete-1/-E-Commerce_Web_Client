@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getGuestId } from "../utils/guestUser";
+import { getGuestUserId } from "../utils/guestUser";
 
 // This is our central Axios client that connects to the live Railway API
 const apiClient = axios.create({
@@ -13,7 +13,7 @@ const apiClient = axios.create({
 // We add an interceptor to automatically attach the guest ID to every request!
 // This makes it so we don't have to manually pass the guestId in every single API call.
 apiClient.interceptors.request.use((config) => {
-  const guestId = getGuestId();
+  const guestId = getGuestUserId();
   if (guestId) {
     config.headers["x-guest-id"] = guestId;
   }
