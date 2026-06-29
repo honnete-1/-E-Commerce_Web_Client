@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* 
+  We are telling Tailwind to use our custom '.dark' class for Dark Mode, 
+  instead of just relying on the computer's system preference. 
+  This allows our toggle button to work!
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 
+  @theme is where we define our custom colors and fonts for Tailwind.
+  Any color we put here can be used as a Tailwind class!
+  For example, '--color-brand-500' becomes 'bg-brand-500' or 'text-brand-500'.
+*/
+@theme {
+  /* Soft Pastels palette - These are great for light mode backgrounds! */
+  --color-pastel-pink: #f8bbd0;
+  --color-pastel-lilac: #e1bee7;
+  --color-pastel-purple: #d1c4e9;
+  --color-pastel-blue: #bbdefb;
+  --color-pastel-teal: #b2ebf2;
+
+  /* The "Brand" scale - These are deeper colors used for our main buttons and text */
+  --color-brand-50: #fbf7fd;
+  --color-brand-100: #f3e5f8;
+  --color-brand-200: #e1bee7;
+  --color-brand-300: #d1c4e9;
+  --color-brand-400: #b39ddb;
+  --color-brand-500: #9575cd;
+  --color-brand-600: #7e57c2;
+  --color-brand-700: #6a3fa8;
+  --color-brand-800: #4f2d80;
+  --color-brand-900: #392163;
+  
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Base HTML styles */
+html {
+  /* This makes scrolling to different parts of the page smooth instead of jumping instantly */
+  scroll-behavior: smooth;
+}
+
+/* Base Body styles - These are the defaults for the whole app */
+body {
+  font-family: var(--font-sans);
+  background-color: #fafaf9; /* A very light grey/off-white for light mode */
+  color: #1c1917; /* Very dark grey text for readability */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth fade when switching to dark mode! */
+}
+
+/* When the HTML tag has the '.dark' class (from our toggle button), change the body colors! */
+html.dark body {
+  background-color: #1c1917; /* Dark background */
+  color: #fafaf9; /* Light text */
+}
+
+/* This is a helpful utility class that cuts off text after 2 lines and adds "..." */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
