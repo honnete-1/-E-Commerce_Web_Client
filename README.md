@@ -1,7 +1,22 @@
 # E-Comus Storefront
 
-A React + Tailwind CSS + Axios + TanStack Query e-commerce client built against the
-[E-Comus Open REST API](https://e-commas-apis-production-e0f8.up.railway.app/api-docs/).
+![HTML5](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white) ![CSS3](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) ![Axios](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=white) ![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?logo=reactquery&logoColor=white)
+
+E-Comus Storefront is a React + Tailwind CSS + Axios + TanStack Query e-commerce client built against the [E-Comus Open REST API](https://e-commas-apis-production-e0f8.up.railway.app/api-docs/), letting users browse products, manage a persistent cart, and check out, all from a clean and intuitive storefront.
+
+**Live Demo:** https://e-commerce-web-client-blond.vercel.app/
+
+## Table of Contents
+
+- [Tech stack](#tech-stack)
+- [Setup](#setup)
+- [Environment variables](#environment-variables)
+- [Project structure](#project-structure)
+- [State management approach](#state-management-approach)
+- [Guest identity / cart persistence](#guest-identity--cart-persistence)
+- [Known documentation discrepancies / assumptions](#known-documentation-discrepancies--assumptions)
+- [Codebase walkthrough talking points](#codebase-walkthrough-talking-points)
+- [Deployment](#deployment)
 
 ## Tech stack
 
@@ -105,12 +120,7 @@ than assuming one exact response shape:
 Deploy the `dist/` output (after `npm run build`) to Vercel or Netlify. Set
 `VITE_API_BASE_URL` as an environment variable in the hosting dashboard — don't hard-code it.
 
-## Screenshots
-
-_Add screenshots of the running app here once deployed._
-
 ## Live links
 
 - GitHub repo: _add link_
-- Deployed app: _add link_
-- Walkthrough video: _add link_
+- Deployed app: https://e-commerce-web-client-blond.vercel.app/
