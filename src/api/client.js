@@ -1,53 +1,33 @@
 import axios from "axios";
-import { getGuestUserId } from "../utils/guestUser";
+import { getGuestId } from "../utils/guestUser";
 
-// Single centralized Axios instance. No component or hook in this app
-// should import axios directly — everything goes through this client so
-// base URL, headers, and error handling live in exactly one place.
+// This is our central Axios client that connects to the live Railway API
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  // Use the environment variable if it exists, otherwise fall back to the live API URL
+  baseURL: import.meta.env.VITE_API_BASE_URL || "https://e-commas-apis-production-e0f8.up.railway.app/api",
   headers: {
     "Content-Type": "application/json",
   },
-  timeout: 15000,
 });
 
-// Request interceptor: attach the persisted MongoDB userId to every
-// request so the API can scope cart/orders correctly.
+// We add an interceptor to automatically attach the guest ID to every request!
+// This makes it so we don't have to manually pass the guestId in every single API call.
 apiClient.interceptors.request.use((config) => {
-  const userId = getGuestUserId();
-  if (userId) {
-    if (config.method === "get" || config.method === "delete") {
-      config.params = { userId, ...config.params };
-    } else {
-      config.data = { userId, ...(config.data || {}) };
-    }
+  const guestId = getGuestId();
+  if (guestId) {
+    config.headers["x-guest-id"] = guestId;
   }
   return config;
 });
 
-// Response interceptor: normalize errors into a single shape so every
-// useQuery/useMutation error handler can rely on error.message and
-// error.status, regardless of what the API actually returned.
+// We add a response interceptor to normalize errors
+// This guarantees our hooks always receive a clean error message string instead of a messy Axios error object.
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    const status = error.response?.status;
-    const serverMessage =
-      error.response?.data?.message ||
-      error.response?.data?.error ||
-      error.response?.data?.errors?.[0]?.message;
-
-    const normalized = new Error(
-      serverMessage ||
-        (status
-          ? `Request failed with status ${status}`
-          : "Network error — please check your connection and try again.")
-    );
-    normalized.status = status;
-    normalized.original = error;
-
-    return Promise.reject(normalized);
+    // If the API sent us a specific error message, use it!
+    const message = error.response?.data?.message || error.message || "An unexpected error occurred.";
+    return Promise.reject(new Error(message));
   }
 );
 
