@@ -12,8 +12,7 @@ export function useOrders() {
   return useQuery({
     queryKey: ["orders"],
     queryFn: fetchOrders,
-    // Don't even attempt the fetch if we don't have a valid MongoDB userId.
-    // This prevents the Malformed ObjectID crash on the orders page.
+    // I skip the fetch without a valid MongoDB userId to avoid a crash
     enabled: hasValidUserId(),
     retry: false,
   });

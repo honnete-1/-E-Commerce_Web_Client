@@ -14,8 +14,7 @@ export default function CheckoutPage() {
   const placeOrder = usePlaceOrder();
   const navigate = useNavigate();
 
-  // Pure UI state: form fields for shipping details, never sent to the
-  // query cache.
+  // I keep shipping form fields as local UI state
   const [shipping, setShipping] = useState({
     fullName: "",
     address: "",

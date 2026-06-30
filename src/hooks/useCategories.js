@@ -5,6 +5,6 @@ export function useCategories() {
   return useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
-    staleTime: 5 * 60_000, // categories change rarely; cache longer
+    staleTime: 5 * 60_000, // I cache categories longer since they rarely change
   });
 }

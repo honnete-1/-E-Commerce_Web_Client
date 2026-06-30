@@ -10,9 +10,7 @@ import toast from "react-hot-toast";
 
 const CART_KEY = ["cart"];
 
-// The cart is server state end to end: it is read with useQuery and
-// every mutation invalidates (or optimistically patches) that same
-// query key. No cart data is ever copied into useState.
+// I treat the cart as server state end to end, never copied into useState
 export function useCart() {
   return useQuery({
     queryKey: CART_KEY,
@@ -45,7 +43,7 @@ export function useUpdateCartItem() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateCartItem,
-    // Optimistic update: the quantity stepper should feel instant.
+    // I optimistically update so the quantity stepper feels instant
     onMutate: async ({ itemId, quantity }) => {
       await queryClient.cancelQueries({ queryKey: CART_KEY });
       const previousCart = queryClient.getQueryData(CART_KEY);

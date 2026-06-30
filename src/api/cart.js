@@ -1,9 +1,6 @@
 import apiClient from "./client";
 
-// Cart is server-backed (per the brief's "cart contents must survive a
-// refresh" requirement) and scoped by the guest userId injected by the
-// Axios interceptor. We never mirror cart contents into local state —
-// the TanStack Query cache for ["cart"] is the single source of truth.
+// Cart is server-backed and scoped by the guest userId from the Axios interceptor
 
 export async function fetchCart() {
   const { data } = await apiClient.get("/cart");

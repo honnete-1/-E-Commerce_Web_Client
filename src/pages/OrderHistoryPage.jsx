@@ -22,7 +22,7 @@ function hasValidUserId() {
 export default function OrderHistoryPage() {
   const { data: orders, isLoading, isError, error, refetch } = useOrders();
 
-  // Session not yet registered with the API
+  // I skip the fetch if the session isn't registered with the API yet
   if (!hasValidUserId()) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">

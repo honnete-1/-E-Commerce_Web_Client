@@ -1,7 +1,6 @@
 import apiClient from "./client";
 
-// Category names to hide — junk/test entries that exist in the shared
-// API but serve no purpose in the storefront UI.
+// Category names I hide — junk/test entries from the shared API
 const HIDDEN_CATEGORIES = new Set(["test", "testcat123"]);
 
 export async function fetchCategories() {
@@ -15,7 +14,7 @@ export async function fetchCategories() {
 
   const raw = Array.isArray(candidate) ? candidate : [];
 
-  // Remove junk categories and deduplicate by name (case-insensitive).
+  // I remove junk categories and deduplicate by name
   const seen = new Set();
   const cleaned = raw.filter((cat) => {
     const key = (cat.name ?? "").toLowerCase().trim();
@@ -26,8 +25,7 @@ export async function fetchCategories() {
     return true;
   });
 
-  // For each remaining category, check if it actually has products.
-  // We do these checks in parallel to keep it fast.
+  // I check each category for products in parallel to keep it fast
   const withCounts = await Promise.all(
     cleaned.map(async (cat) => {
       const id = cat._id ?? cat.id;
@@ -49,7 +47,7 @@ export async function fetchCategories() {
     })
   );
 
-  // Only surface categories that actually have products.
+  // I only surface categories that actually have products
   return withCounts
     .filter(({ count }) => count > 0)
     .map(({ cat }) => cat);

@@ -1,15 +1,12 @@
 import apiClient from "./client";
 
-// All product reads/writes go through this module.
-
 export async function fetchProducts({
   page = 1,
   limit = 12,
   search = "",
   category = "",
 } = {}) {
-  // When a category is selected, use the dedicated endpoint.
-  // The generic /products endpoint does not support ?category= filtering.
+  // I use the dedicated endpoint since /products doesn't support ?category=
   if (category) {
     const { data } = await apiClient.get(`/products/category/${category}`, {
       params: {
@@ -36,7 +33,7 @@ export async function fetchProducts({
     };
   }
 
-  // No category: standard paginated product list
+  // I fall back to the standard paginated product list
   const { data } = await apiClient.get("/products", {
     params: {
       page,
@@ -67,8 +64,7 @@ export async function fetchProducts({
 
 export async function fetchProductById(id) {
   const { data } = await apiClient.get(`/products/${id}`);
-  // APIs sometimes wrap single items in extra objects (e.g., { data: { product: { ... } } })
-  // We check multiple common patterns so our app doesn't crash or show empty details!
+  // I check multiple common envelope shapes to avoid crashing on a mismatch
   return data?.data?.product ?? data?.product ?? data?.data ?? data;
 }
 

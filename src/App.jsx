@@ -12,8 +12,7 @@ import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import OrderDetailPage from "./pages/OrderDetailPage";
 
-// One QueryClient for the whole app. Sensible shared defaults; each
-// hook overrides staleTime where it matters (categories vs. live cart).
+// One shared QueryClient; each hook overrides staleTime where it matters
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

@@ -5,9 +5,7 @@ import {
   fetchProductsByCategory,
 } from "../api/products";
 
-// Deliberate, descriptive query key includes every input that affects
-// the result, so TanStack Query caches and refetches correctly per
-// page/search/category combination.
+// I include every input in the query key so caching stays accurate per combination
 export function useProducts({ page, limit, search, category }) {
   return useQuery({
     queryKey: ["products", { page, limit, search, category }],

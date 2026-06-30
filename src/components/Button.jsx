@@ -1,5 +1,4 @@
-// We define our different button styles here so they are easy to change later.
-// The "dark:" classes tell Tailwind what color to use when Dark Mode is active!
+// My button style variants
 const VARIANTS = {
   primary:
     "bg-brand-500 text-white hover:bg-brand-600 focus-visible:ring-brand-300 disabled:bg-brand-200 " + 
@@ -15,26 +14,22 @@ const VARIANTS = {
     "dark:text-stone-300 dark:hover:bg-stone-800",
 };
 
-// We define different sizes so we can have big buttons and small buttons easily.
+// My button size variants
 const SIZES = {
   sm: "px-3 py-1.5 text-sm",
   md: "px-4 py-2.5 text-sm",
   lg: "px-5 py-3 text-base",
 };
 
-/**
- * Our main Button component!
- * We use this everywhere in the app instead of writing <button> directly.
- * It ensures all our buttons look consistent.
- */
+// My shared button used everywhere instead of a raw <button>
 export default function Button({
-  variant = "primary", // Default to the 'primary' style
-  size = "md",         // Default to the medium size
-  isLoading = false,   // If true, shows a little spinning circle
-  className = "",      // Allows us to pass extra styles if needed
-  children,            // The text inside the button (e.g., "Add to Cart")
-  disabled,            // If true, the button can't be clicked
-  ...props             // Passes down any other props (like onClick)
+  variant = "primary",
+  size = "md",
+  isLoading = false,
+  className = "",
+  children,
+  disabled,
+  ...props
 }) {
   return (
     <button
@@ -45,12 +40,9 @@ export default function Button({
       disabled={disabled || isLoading}
       {...props}
     >
-      {/* If isLoading is true, we show this spinning circle */}
       {isLoading && (
         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
       )}
-      
-      {/* This is the text or icons we put inside the Button when we use it */}
       {children}
     </button>
   );

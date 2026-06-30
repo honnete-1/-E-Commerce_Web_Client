@@ -14,7 +14,7 @@ function isValidMongoId(id) {
 
 function generateCredentials() {
   const suffix = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-  // Use gmail.com — most APIs accept it; avoid fake TLDs that fail validation
+  // I use gmail.com since most APIs accept it
   const email = `ecomus.guest.${suffix}@gmail.com`;
   const password = `Pass${suffix.slice(0, 6)}!9`;
   const name = "Guest User";
@@ -22,7 +22,7 @@ function generateCredentials() {
 }
 
 async function tryRegister(email, password, name) {
-  // Try both role values the API might accept
+  // I try both role values the API might accept
   const payloads = [
     { name, email, password, role: "buyer" },
     { name, email, password, role: "user" },
@@ -68,14 +68,14 @@ async function tryLogin(email, password) {
   return null;
 }
 
-// Called once on app boot. Ensures we have a valid MongoDB _id for this session.
+// I call this once on app boot to ensure a valid MongoDB _id exists
 export async function ensureGuestUser() {
   const existingId = getGuestUserId();
 
-  // Already have a valid MongoDB id — nothing to do
+  // I already have a valid MongoDB id, nothing to do
   if (isValidMongoId(existingId)) return existingId;
 
-  // We had a previous session with credentials — try logging back in
+  // I had a previous session, so I try logging back in
   const savedEmail = localStorage.getItem(STORAGE_EMAIL_KEY);
   const savedPassword = localStorage.getItem(STORAGE_PASSWORD_KEY);
   if (savedEmail && savedPassword) {
@@ -97,7 +97,7 @@ export async function ensureGuestUser() {
     return id;
   }
 
-  // Registration failed entirely — clear any stale bad ID so we retry next time
+  // I clear any stale bad ID so I retry next time
   localStorage.removeItem(STORAGE_KEY);
   console.warn("[EComus] Could not register guest user. Orders/cart may not work.");
   return null;
